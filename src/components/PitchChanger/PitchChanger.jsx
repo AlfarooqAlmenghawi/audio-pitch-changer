@@ -6,6 +6,7 @@ function PitchChanger() {
   const [audioPreviewBackup, setAudioPreviewBackup] = useState(null);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [temporaryPlaybackRate, setTemporaryPlaybackRate] = useState(1);
+  const [temporaryYouTubeLink, setTemporaryYouTubeLink] = useState(null);
   const audioContextRef = useRef(null);
   const audioBufferRef = useRef(null);
   const audioSourceRef = useRef(null);
@@ -56,6 +57,31 @@ function PitchChanger() {
     const url = URL.createObjectURL(blob);
     if (audioPreview) URL.revokeObjectURL(audioPreview);
     setAudioPreview(url);
+  };
+
+  const handleTemporaryLinkChange = (e) => {
+    setTemporaryYouTubeLink(e.target.value);
+  };
+
+  const handleYouTubeLink = async (youtubeLink) => {
+    try {
+      const response = await fetch(
+        "https://backend-for-youtube-to-mp3-data-handling.onrender.com/convert",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: youtubeLink }),
+        }
+      );
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioPreview(url);
+    } catch (error) {
+      console.error("Error converting YouTube link:", error);
+    }
   };
 
   useEffect(() => {
@@ -178,6 +204,14 @@ function PitchChanger() {
       <div>
         <h2>Pitch Changer</h2>
         <input type="file" accept="audio/*" onChange={handleFileChange} />
+        {/* <input type="text" onChange={handleTemporaryLinkChange} />
+        <button
+          onClick={() => {
+            handleYouTubeLink(temporaryYouTubeLink);
+          }}
+        >
+          Attempt To Process
+        </button> */}
         {audioPreview && (
           <div>
             <audio key={audioPreview} controls>
@@ -190,7 +224,7 @@ function PitchChanger() {
         )}
         {audioFile && (
           <div>
-            <label>Playback Speed: </label>
+            <label>Pitch: </label>
             <input
               type="text"
               // min="0.5"
