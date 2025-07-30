@@ -203,8 +203,8 @@ function PitchChanger() {
   return (
     <>
       <div>
-        {/* <h2>Pitch Changer</h2> */}
-        <input type="file" accept="audio/*" onChange={handleFileChange} />
+        <h2>Pitch Changer</h2>
+        <input type="file" onChange={handleFileChange} />
         {/* <input type="text" onChange={handleTemporaryLinkChange} />
         <button
           onClick={() => {
