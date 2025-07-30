@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./PitchChanger.css";
 
 function PitchChanger() {
   const [audioFile, setAudioFile] = useState(null);
@@ -202,7 +203,7 @@ function PitchChanger() {
   return (
     <>
       <div>
-        <h2>Pitch Changer</h2>
+        {/* <h2>Pitch Changer</h2> */}
         <input type="file" accept="audio/*" onChange={handleFileChange} />
         {/* <input type="text" onChange={handleTemporaryLinkChange} />
         <button
@@ -214,12 +215,12 @@ function PitchChanger() {
         </button> */}
         {audioPreview && (
           <div>
-            <audio key={audioPreview} controls>
+            <audio className="audio" key={audioPreview} controls>
               <source src={audioPreview} type={audioFile?.type} />
               Your browser does not support the audio element.
             </audio>
 
-            <button onClick={handleClear}>Remove</button>
+            {/* <button onClick={handleClear}>Remove</button> */}
           </div>
         )}
         {audioFile && (
@@ -244,9 +245,16 @@ function PitchChanger() {
             >
               Set Pitch
             </button>
-            <span>{playbackRate}x</span>
-            {/* <button onClick={playSound}>Play</button> */}
-            <button onClick={downloadModifiedAudio}>Download</button>
+            <button onClick={downloadModifiedAudio}>
+              Download Modified Audio
+            </button>
+            <div>
+              <span>
+                Pitch {playbackRate} (Sound playing at {playbackRate * 100}%
+                original pitch and tempo.)
+              </span>
+              {/* <button onClick={playSound}>Play</button> */}
+            </div>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 function Header() {
-  return <h1>Pitch Changer Header</h1>;
+  return <h1>Pitch Changer</h1>;
 }
 
 export default Header;
