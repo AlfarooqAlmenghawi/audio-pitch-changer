@@ -1,2 +1,5 @@
-audio {
+@media screen and (max-width: 500px) {
+  audio {
+    width: 100%;
+  }
 }
